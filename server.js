@@ -14,10 +14,10 @@ app.get('/', (req, res) => {
 
 
 const SpotifyAuth = require('./routes/SpotifyAuth');
-const GeniusAuth = require('./routes/GeniusAuth');
+const GeniusApi = require('./routes/GeniusApi');
 
 app.use('/', SpotifyAuth);
-app.use('/', GeniusAuth);
+app.use('/', GeniusApi);
 
 app.listen(port, ()=>{
       console.log(`Running on http://localhost:${port}`);
