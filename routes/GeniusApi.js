@@ -33,10 +33,11 @@ router.route('/fetch_lyrics').get((req, res) => {
 
             for (let i = 0; i < rlength; i++) {
 
-                let _song = results[i].result.full_title.split(' by', 1)[0].toLowerCase();
+                let _song = results[i].result.full_title.trim().split(' by', 1)[0].toLowerCase();
                 let _artist = results[i].result.primary_artist.name.toLowerCase();
-
-                console.log(_song + "....." + song)
+                
+                console.log(song)
+                console.log(results[i].result.full_title.text.trim())
                 console.log(_artist + "....." + artist)
                 if (_song == song && _artist == artist) {
 
@@ -46,7 +47,7 @@ router.route('/fetch_lyrics').get((req, res) => {
             }
         })
         .then(() => {
-            if (lyrics_url == null) {
+            if (lyrics_url == null || lyrics_url == {}) {
                 res.send('Opps...')
             }
             else {
