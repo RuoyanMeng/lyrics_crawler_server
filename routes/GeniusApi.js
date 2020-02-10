@@ -3,8 +3,13 @@ const axios = require('axios');
 const $ = require('cheerio');
 const BASE_URL = 'https://api.genius.com'
 
-var env = process.env.NODE_ENV || 'genius';
-var creds = require('../credentials')[env];
+
+// var env = process.env.NODE_ENV || 'genius';
+// var creds = require('../credentials')[env];
+
+let redirect_uri = 
+  process.env.REDIRECT_URI || 
+  'http://localhost:5000/callback'
 
 router.route('/fetch_lyrics').get((req, res) => {
     let song = req.query.song.toLowerCase();
@@ -20,7 +25,7 @@ router.route('/fetch_lyrics').get((req, res) => {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
-            "Authorization": "Bearer " + creds.client_access_token
+            "Authorization": "Bearer " + process.env.GENIUS_ACCESS_TOKEN
         },
         data: {
             "q": song + artist

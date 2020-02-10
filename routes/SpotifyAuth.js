@@ -12,7 +12,7 @@ router.route('/login').get((req,res) => {
     
     let _url = BASE_URL + '/authorize' +
             '?response_type=code' +
-            '&client_id=' + creds.client_id +
+            '&client_id=' + process.env.SPOTIFY_CLIENT_ID +
             '&redirect_uri=' + encodeURIComponent(redirect_uri) + '&scope=' + Object.values(creds.scope).join('%20');
 
     res.redirect(_url);
@@ -27,8 +27,8 @@ router.route('/callback').get((req,res)=>{
     params.append('code', code);
     params.append('redirect_uri', redirect_uri);
     params.append('grant_type', 'authorization_code');
-    params.append('client_id', creds.client_id);
-    params.append('client_secret', creds.client_secret);
+    params.append('client_id', process.env.SPOTIFY_CLIENT_ID);
+    params.append('client_secret', process.env.SPOTIFY_CLIENT_SECRET);
     axios.post(_url,params)
     .then(resp=>{
         refresh_token = resp.data.access_token
