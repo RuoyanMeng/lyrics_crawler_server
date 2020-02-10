@@ -1,9 +1,11 @@
 const router = require('express').Router();
 const axios = require('axios');
 const BASE_URL = 'https://accounts.spotify.com'
+const scope = ['user-modify-playback-state', 'user-read-currently-playing', 'user-read-playback-state', "streaming", "user-read-email", "user-read-private"]
 
-var env = process.env.NODE_ENV || 'spotify';
-var creds = require('../credentials')[env];
+
+// var env = process.env.NODE_ENV || 'spotify';
+// var creds = require('../credentials')[env];
 let redirect_uri = process.env.REDIRECT_URI || "http://localhost:5000/callback"
 
 router.route('/login').get((req,res) => {
@@ -13,7 +15,7 @@ router.route('/login').get((req,res) => {
     let _url = BASE_URL + '/authorize' +
             '?response_type=code' +
             '&client_id=' + process.env.SPOTIFY_CLIENT_ID +
-            '&redirect_uri=' + encodeURIComponent(redirect_uri) + '&scope=' + Object.values(creds.scope).join('%20');
+            '&redirect_uri=' + encodeURIComponent(redirect_uri) + '&scope=' + scope.join('%20');
 
     res.redirect(_url);
 
