@@ -16,7 +16,6 @@ router.route('/fetch_lyrics').get((req, res) => {
     let song = req.query.song.toLowerCase();
     let artist = req.query.artist.toLowerCase();
 
-
     let lyrics_url = null
 
     axios({
@@ -40,9 +39,9 @@ router.route('/fetch_lyrics').get((req, res) => {
             for (let i = 0; i < rlength; i++) {
 
                 let _song = results[i].result.full_title.trim().split(' by', 1)[0].toLowerCase();
-                let _artist = results[i].result.primary_artist.name.toLowerCase().replace(/[^\x20-\x7E]/g, '');
+                let _artist = results[i].result.primary_artist.name.toLowerCase().replace(/[^\x20-\x7E-ZÀ-ÿ]/g, '');
 
-                // console.log(encodeURIComponent(_artist))
+                //console.log(encodeURIComponent(_artist))
 
                 if (_song == song && _artist == artist) {
                     
