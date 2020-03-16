@@ -36,7 +36,7 @@ router.route('/fetch_lyrics').get((req, res) => {
                 'Accept': 'application/json',
                 "Authorization": "Bearer " + bearer
             },
-            data: {
+            params: {
                 "q": song +' ' + artist,
                 "type": "track",
                 "territory": "HK",
@@ -48,11 +48,12 @@ router.route('/fetch_lyrics').get((req, res) => {
 
                 let results = resp.data.tracks.data;
                 let rlength = results.length;
+
     
                 for (let i = 0; i < rlength; i++) {
     
                     let _song = results[i].name.toLowerCase();
-                    let _album = results[i].album.name.toLowerCase();
+                    let _album = results[i].album.name.toLowerCase().replace("，",",").split(" -")[0];
              
                     if ( (song.includes(_song) || _song.includes(song)) && (album.includes(_album)||_album.includes(album)) ) {
                         lyrics_url = results[i].url;
@@ -78,12 +79,14 @@ router.route('/fetch_lyrics').get((req, res) => {
     
                         })
                         .catch(err => {
-                            res.send(err)
+                            //res.send(err)
+                            console.log(err)
+
                         })
                 }
             })
             .catch(err => {
-                res.send(err);
+                //res.send(err);
                 console.log(err)
             })
     
@@ -99,7 +102,7 @@ router.route('/fetch_lyrics').get((req, res) => {
                 'Accept': 'application/json',
                 "Authorization": "Bearer " + bearer
             },
-            data: {
+            params: {
                 "q": song +' ' + artist
             }
             })
