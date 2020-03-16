@@ -26,7 +26,7 @@ router.route('/fetch_lyrics').get((req, res) => {
     if(pattern.test(song)||pattern.test(artist)||pattern.test(album)){
 
         BASE_URL = 'https://api.kkbox.com/v1.1';
-        bearer = 'XUF46pJtvz9f4t8v6BWnpw==';
+        bearer = process.env.KKBOX_ACCESS_TOKEN;
 
         axios({
             url: '/search',
@@ -71,6 +71,8 @@ router.route('/fetch_lyrics').get((req, res) => {
                             if (JSON.stringify(lyrics) === '{}') {
                                 res.send('Oops! No results found')
                             } else {
+                                
+                                lyrics = lyrics + "\nSource: KKBOX"
                                 res.send(lyrics)
                             }
     
@@ -130,6 +132,7 @@ router.route('/fetch_lyrics').get((req, res) => {
                             if (JSON.stringify(lyrics) === '{}') {
                                 res.send('Oops! No results found')
                             } else {
+                                lyrics = lyrics + "\n Source: GENIUS"
                                 res.send(lyrics)
                             }
     
