@@ -26,7 +26,8 @@ router.route('/fetch_lyrics').get((req, res) => {
     if(pattern.test(song)||pattern.test(artist)||pattern.test(album)){
 
         BASE_URL = 'https://api.kkbox.com/v1.1';
-        bearer = process.env.KKBOX_ACCESS_TOKEN;
+        // bearer = process.env.KKBOX_ACCESS_TOKEN;
+        bearer = global.token;
 
         axios({
             url: '/search',
