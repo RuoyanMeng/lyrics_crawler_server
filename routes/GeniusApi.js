@@ -16,7 +16,6 @@ router.route('/fetch_lyrics').get((req, res) => {
     let song = req.query.song.toLowerCase();
     let artist = req.query.artist.toLowerCase();
     let album  = req.query.album.toLowerCase();
-
     let lyrics_url = null;
     let BASE_URL = null;
     let bearer = null;
@@ -131,13 +130,13 @@ router.route('/fetch_lyrics').get((req, res) => {
                 }
                 else {
                     axios.get(lyrics_url)
-                        .then(resq => {
+                        .then(resq =>{
                             let lyrics = $('.lyrics', resq.data).text()
                             if (JSON.stringify(lyrics) === '{}') {
                                 res.send('Oops! No results found')
                             } else {
                                 lyrics = lyrics + "\n Source: GENIUS"
-                                res.send(lyrics)
+                                res.send(lyrics) 
                             }
     
                         })
