@@ -15,7 +15,6 @@ router.route('/login/:env').get((req, res) => {
         '?response_type=code' +
         '&client_id=' + process.env.SPOTIFY_CLIENT_ID +
         '&redirect_uri=' + encodeURIComponent(redirect_uri) + '&scope=' + scope.join('%20');
-
     res.redirect(_url);
 
 });
@@ -33,12 +32,13 @@ router.route('/callback').get((req, res) => {
     axios.post(_url, params)
         .then(resp => {
             refresh_token = resp.data.access_token
+            let access_token = resp.data.access_token
             if (env == "web") {
                 let uri = process.env.FRONTEND_URI || 'http://localhost:3000';
+                res.redirect(uri + "?access_token=" + access_token)
             } else {
                 let uri = process.env.REDIRECT_URI_M || "exp://127.0.0.1:19000"
-                let access_token = resp.data.access_token
-                res.redirect(uri + "?access_token="+access_token)
+                res.redirect(uri + "?access_token=" + access_token)
             }
 
         })
